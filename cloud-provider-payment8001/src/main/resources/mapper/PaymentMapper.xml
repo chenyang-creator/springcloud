@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yc.dao.PaymentDao">
+
+    <resultMap id="baseResultMap" type="com.yc.entities.Payment" >
+        <id column="id" property="id" jdbcType="BIGINT"/>       <!--BIGINT，VARCHAR则合理必须为大写-->
+        <result column="serial" property="serial" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="create" parameterType="com.yc.entities.Payment" useGeneratedKeys="true" keyColumn="id">
+        insert into payment (serial) values (#{serial})     /*这里的括号要有*/
+    </insert>
+
+    <select id="getPaymentById" parameterType="Long" resultMap="baseResultMap">
+        select * from payment where id = #{id}
+    </select>
+
+</mapper>
