@@ -11,6 +11,18 @@ spring:
     url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 333
+
+#引入Eureka
+eureka:
+  client:
+    #表示是否将自己注册进EurekaServer，默认为true
+    register-with-eureka: true
+    #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    fetchRegistry: true
+    #入住地址
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
 #mybatis的配置扫描
 mybatis:
   mapperLocations: classpath:mapper/*.xml                       # 在resource文件夹下的Mapper文件专门放置各种Mapper文件
