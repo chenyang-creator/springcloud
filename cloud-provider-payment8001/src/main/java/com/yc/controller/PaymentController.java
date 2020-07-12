@@ -6,7 +6,11 @@ import com.yc.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 //pom文件中的lombok包起的作用，如果不想每次都写private  final Logger logger = LoggerFactory.getLogger(当前类名.class);
@@ -19,6 +23,9 @@ public class PaymentController {
 
     @Value("${server.port}")
     private String serverPort;
+    //服务发现注册，对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息
+    @Autowired
+    private DiscoveryClient discoveryClient;//
 
     @PostMapping(value = "/payment/create")
     public CommonResult create(@RequestBody Payment payment){       //@RequestBody注解接收返回的json格式字符串
@@ -41,6 +48,19 @@ public class PaymentController {
         }
     }
 
+     @GetMapping(value = "/payment/discovery")
+    public Object discovery(){
+        //相当于得到eureka中的Application列表,得到CLOUD-PAYMENT-SERVICE等Application列表信息
+         List<String> services = discoveryClient.getServices();
+         for(String element : services){
+             log.info("****element"+element);
+         }
+         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+         for(ServiceInstance instance : instances){
+             log.info(instance.getServiceId()+"\t"+instance.getHost()+"\t"+instance.getPort()+"\t"+instance.getUri());
+         }
+         return this.discoveryClient;
+     }
 }
 
 

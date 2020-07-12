@@ -10,5 +10,11 @@ eureka:
     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
     fetch-registry: false
     service-url:
-      #设置与Eureka Server监护的地址查询服务和注册服务都需要依赖这个地址，与另一个Eureka Server相互注册，守望着eureka7002.com:7002
+      #单机版：就是指向自己
+      #defaultZone: http://eureka7001.com:7001/eureka/
+      #集群版：设置与Eureka Server监护的地址查询服务和注册服务都需要依赖这个地址，与另一个Eureka Server相互注册，守望着eureka7002.com:7002
       defaultZone: http://eureka7002.com:7002/eureka/
+  #eureka的自我保护机制，默认是开启的true，默认的间隔时间是90秒
+  server:
+    enable-self-preservation: false        #eureka的自我保护机制，true是开启的，false是关闭的
+    eviction-interval-timer-in-ms: 2000    #设置eureka的自我保护机制的时间间隔为2000毫秒

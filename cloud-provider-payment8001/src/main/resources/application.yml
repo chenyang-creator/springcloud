@@ -28,5 +28,12 @@ eureka:
     service-url:
       #defaultZone: http://localhost:7001/eureka     #单机版
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/     #集群版
-
+  #主机名称的规范和修改
+  instance:                         #原先在eureka中的Status名称为LAPTOP-R1117CUT:cloud-payment-service:8001
+      instance-id: payment8001      #修改在eureka中的Status实例名为payment8001
+      prefer-ip-address: true       #访问路径可以显示ip
+      #eureka客户端向服务端发送心跳的时间间隔，单位为秒（默认是30秒）
+      lease-renewal-interval-in-seconds: 1
+      #eureka服务端在收到最后一次心跳后等待时间上限，单位为秒（默认是90秒），超时将剔除服务
+      lease-expiration-duration-in-seconds: 2
 
