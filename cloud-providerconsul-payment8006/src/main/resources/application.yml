@@ -1,0 +1,22 @@
+#表示注册到zookeeper服务器的支付服务提供者端口号
+server:
+  port: 8006
+#服务别名---注册consul到注册中心名称
+
+spring:
+  application:
+    name: consul-provider-payment
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource                # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver                  # mysql驱动包
+    url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 333
+  #consul注册中心地址
+  cloud:
+    consul:
+      host: 192.168.19.129
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        hostname: 192.168.3.63    #解决consul使用CentOS docker安装consul，在访问的时候报红×，hostname是本机IP
