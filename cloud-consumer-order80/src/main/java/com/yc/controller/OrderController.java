@@ -4,6 +4,7 @@ import com.yc.entities.CommonResult;
 import com.yc.entities.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,10 +32,22 @@ public class OrderController {
         //可以打印日志
         return restTemplate.postForObject(PAYMENT_URL + "/payment/create",payment,CommonResult.class);
     }
-    //读操作
+    //读操作。使用getForObject
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id){
         //可以打印日志
         return restTemplate.getForObject(PAYMENT_URL+"/payment/get/"+id,CommonResult.class);
+    }
+    //读操作。使用getForEntity
+    @GetMapping("/consumer/payment/getForEntity/{id}")
+    public CommonResult<Payment> getPayment2(@PathVariable("id") Long id){
+        //可以打印日志等信息操作............
+        //entity对象里保存了一些响应头，相应状态码，响应体等一些信息
+        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
+        if(entity.getStatusCode().is2xxSuccessful()){
+            return entity.getBody();
+        }else {
+            return new CommonResult<>(444,"操作失败");
+        }
     }
 }
