@@ -2,7 +2,6 @@ package com.yc.controller;
 
 import com.yc.entities.CommonResult;
 import com.yc.entities.Payment;
-import com.yc.lb.LoadBalance;
 import com.yc.lb.LoadBalancer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ public class OrderController {
     private RestTemplate restTemplate;
 
     //用于自己写的算法
-    @Autowired
     private LoadBalancer loadBalancer;
     @Autowired
     private DiscoveryClient discoveryClient;
