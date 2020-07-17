@@ -39,6 +39,10 @@ public class PaymentController {
             return new CommonResult(444,"没有对应记录，查询失败"+id+"端口号serverPort"+serverPort,null);
         }
     }
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        return serverPort;
+    }
 
 }
 
