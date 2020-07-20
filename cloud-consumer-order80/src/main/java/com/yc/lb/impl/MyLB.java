@@ -1,6 +1,6 @@
 package com.yc.lb.impl;
 
-import com.yc.lb.LoadBalance;
+import com.yc.lb.LoadBalancer;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 自写负载均衡算法:模仿IRule接口的实现类：RoundRobinRule轮询编写
  */
 @Component
-public class MyLB implements LoadBalance {
+public class MyLB implements LoadBalancer {
 
     private AtomicInteger atomicInteger = new AtomicInteger(0);
 
